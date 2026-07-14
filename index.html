@@ -81,7 +81,20 @@
   .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
   .num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600}
 
-  .hero{padding-top:76px;padding-bottom:20px}
+  .hero{padding-top:72px;padding-bottom:20px}
+  .herogrid{display:grid;grid-template-columns:1.1fr .9fr;gap:38px;align-items:center;margin-bottom:10px}
+  @media(max-width:820px){.herogrid{grid-template-columns:1fr;gap:14px}}
+  .herovis{position:relative}
+  svg.herobrain{width:100%;height:auto;display:block;max-height:340px}
+  .herobrain .cortexfill{fill:var(--surface-2)}
+  .herobrain .cortexline{fill:none;stroke:var(--line);stroke-width:2}
+  .herolegend{display:flex;gap:18px;justify-content:center;margin-top:6px;flex-wrap:wrap}
+  .herolegend span{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;color:var(--ink-faint)}
+  .herolegend .d{display:inline-block;width:10px;height:10px;border-radius:50%}
+  .herolegend .d.p{background:var(--pos)} .herolegend .d.n{background:var(--neg)}
+  @keyframes hpulse{0%,100%{opacity:.45}50%{opacity:1}}
+  .herobrain .pulse{animation:hpulse 3.4s ease-in-out infinite}
+  @media(prefers-reduced-motion:reduce){.herobrain .pulse{animation:none;opacity:.85}}
   .thesis{border-left:3px solid var(--accent);padding:4px 0 4px 20px;margin:28px 0 4px;font-size:clamp(18px,2.4vw,22px);line-height:1.48;color:var(--ink);max-width:62ch;font-style:italic}
 
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:34px;box-shadow:var(--shadow-sm)}
@@ -179,9 +192,37 @@
 </style>
 
 <div class="wrap hero">
-  <div class="eyebrow reveal">TRIBE × Meta Ad Performance · Internal Research · Jul 2026</div>
-  <h1 class="reveal">What the brain reveals about a good Meta ad</h1>
-  <p class="lede reveal">We ran Meta's TRIBE model — which predicts the brain's response to video — across 205 real Meta ecommerce ads, then asked which brain regions, lit up in the opening seconds, predict whether an ad outperforms its brand's others on Meta. The signal is real, it beats chance, and it points somewhere useful.</p>
+  <div class="herogrid">
+    <div class="herotext">
+      <div class="eyebrow reveal">TRIBE × Meta Ad Performance · Internal Research · Jul 2026</div>
+      <h1 class="reveal">What the brain reveals about a good Meta ad</h1>
+      <p class="lede reveal">We ran Meta's TRIBE model — which predicts the brain's response to video — across 205 real Meta ecommerce ads, then asked which brain regions, lit up in the opening seconds, predict whether an ad beats its brand's others.</p>
+    </div>
+    <div class="herovis reveal">
+      <svg class="herobrain" viewBox="0 0 440 330" role="img" aria-label="Illustration of a brain with regions activating: warm regions track better-performing ads, cool regions track worse ones">
+        <defs>
+          <filter id="hb-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="13"/></filter>
+          <clipPath id="hb-clip"><path d="M150 54 C210 26 322 30 368 88 C404 122 400 170 360 198 C349 207 333 208 321 208 C300 244 250 266 174 260 C118 256 74 233 64 196 C54 161 57 118 84 90 C104 66 122 60 150 54 Z"/></clipPath>
+          <radialGradient id="hb-warm"><stop offset="0%" style="stop-color:var(--pos);stop-opacity:.95"/><stop offset="100%" style="stop-color:var(--pos);stop-opacity:0"/></radialGradient>
+          <radialGradient id="hb-cool"><stop offset="0%" style="stop-color:var(--neg);stop-opacity:.9"/><stop offset="100%" style="stop-color:var(--neg);stop-opacity:0"/></radialGradient>
+        </defs>
+        <path class="cortexfill" d="M150 54 C210 26 322 30 368 88 C404 122 400 170 360 198 C349 207 333 208 321 208 C300 244 250 266 174 260 C118 256 74 233 64 196 C54 161 57 118 84 90 C104 66 122 60 150 54 Z"/>
+        <g clip-path="url(#hb-clip)" filter="url(#hb-soft)">
+          <circle cx="106" cy="196" r="32" fill="url(#hb-warm)"/>
+          <circle cx="196" cy="222" r="30" fill="url(#hb-warm)"/>
+          <circle class="pulse" cx="158" cy="206" r="44" fill="url(#hb-warm)"/>
+          <circle cx="256" cy="190" r="27" fill="url(#hb-cool)"/>
+          <circle cx="150" cy="112" r="25" fill="url(#hb-cool)"/>
+        </g>
+        <path class="cortexline" d="M150 54 C210 26 322 30 368 88 C404 122 400 170 360 198 C349 207 333 208 321 208 C300 244 250 266 174 260 C118 256 74 233 64 196 C54 161 57 118 84 90 C104 66 122 60 150 54 Z"/>
+        <path class="cortexline" style="opacity:.55" d="M96 200 C150 214 214 210 292 190"/>
+      </svg>
+      <div class="herolegend">
+        <span><i class="d p"></i>tracks better ads</span>
+        <span><i class="d n"></i>tracks worse ads</span>
+      </div>
+    </div>
+  </div>
   <p class="thesis reveal">In a Meta ad's first few seconds, one brain signal predicts performance more reliably than any other, brand to brand: how strongly the ad is being encoded into memory. It's real — about twice what chance produces — and it points somewhere useful for the next ad.</p>
   <div class="stats reveal">
     <div class="stat"><div class="stat-n">205</div><div class="stat-l">video ads analyzed</div></div>
