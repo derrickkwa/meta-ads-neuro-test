@@ -251,6 +251,25 @@
 
 <section class="reveal">
   <div class="wrap">
+    <div class="eyebrow">Robustness</div>
+    <h2>Does the way we score a winner matter?</h2>
+    <p>ROAS is one definition of a winning ad. Meta reveals another through <strong>spend</strong> — it pours budget into the ads it decides are winners. So we re-ran the whole test against spend, and against a <strong>compound</strong> — half spend, half ROAS: an ad that's both scaled <em>and</em> efficient. Switch the metric.</p>
+    <div class="card" style="margin-top:22px">
+      <div class="seg" role="group" aria-label="Which success metric">
+        <button id="mt-roas" aria-pressed="true">ROAS</button>
+        <button id="mt-spend" aria-pressed="false">Spend</button>
+        <button id="mt-comp" aria-pressed="false">Compound</button>
+      </div>
+      <p class="seg-note" id="mtNote"></p>
+      <div class="chart" id="metricChart"></div>
+      <div style="margin-top:16px"><span class="chancekey"><span class="sw2"></span> what chance explains — the noise zone</span></div>
+    </div>
+    <p style="margin-top:22px">Two things hold. The regions and their directions don't move with the metric — the signal is real however you define success. And <strong>memory leads under the compound</strong>: it's the one system carrying even a trace of the spend (scale) signal, so it survives the switch best — the same verdict the brand-by-brand test reached.</p>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
     <div class="eyebrow">Where in the brain</div>
     <h2>The regions — and why they make sense</h2>
     <p>The signal isn't a scatter of random parcels. It clusters inside known functional systems, and the direction matches what a neuromarketing account would predict. Select a system to see its regions and how it held up.</p>
@@ -425,6 +444,50 @@
   bP.addEventListener("click",function(){setGen("pool");});
   bB.addEventListener("click",function(){setGen("brand");});
 
+  /* ---------- metric-robustness toggle (ROAS / Spend / Compound) ---------- */
+  var MORDER=[["Valuation","pos"],["Meaning","pos"],["Memory","pos"],["Auditory","neg"],["Mental effort","neg"]];
+  var MET={
+    roas:{note:"By within-brand ROAS — the original metric. Every system beats chance decisively.",
+      v:{"Valuation":0.301,"Meaning":0.270,"Memory":0.246,"Auditory":-0.206,"Mental effort":-0.221}},
+    spend:{note:"By spend alone — Meta's own verdict, since it scales budget toward the ads it favors. The brain barely predicts this: almost everything sits inside the noise zone. The signal is about efficiency, not scale.",
+      v:{"Valuation":0.052,"Meaning":0.098,"Memory":0.125,"Auditory":-0.054,"Mental effort":-0.028}},
+    comp:{note:"By the compound (half spend, half ROAS). Every system stays significant but weaker — and memory now leads, since it's the only one carrying any of the spend signal.",
+      v:{"Valuation":0.222,"Meaning":0.229,"Memory":0.233,"Auditory":-0.171,"Mental effort":-0.159}}
+  };
+  (function(){
+    var c=document.getElementById("metricChart");
+    MORDER.forEach(function(r){
+      var row=document.createElement("div");row.className="row";
+      row.innerHTML='<div class="rlabel">'+r[0]+'</div>'+
+        '<div class="track"><div class="chanceband2" style="left:'+pos(-CH)+'%;width:'+(pos(CH)-pos(-CH))+'%"></div>'+
+        '<div class="zline" style="left:'+pos(0)+'%"></div>'+
+        '<div class="bar '+r[1]+'" data-name="'+r[0]+'" style="left:'+pos(0)+'%;width:0%"></div>'+
+        '<div class="bval" data-name="'+r[0]+'"></div></div>';
+      c.appendChild(row);
+    });
+  })();
+  function renderMetric(mode){
+    var d=MET[mode];
+    MORDER.forEach(function(r){
+      var v=d.v[r[0]], g=geo(v);
+      var bar=document.querySelector('#metricChart .bar[data-name="'+r[0]+'"]');
+      var lab=document.querySelector('#metricChart .bval[data-name="'+r[0]+'"]');
+      bar.style.left=g.left+"%"; bar.style.width=g.width+"%";
+      lab.textContent=fmt(v);
+      lab.style.left = v>=0 ? "calc("+(g.left+g.width)+"% + 8px)" : "calc("+g.left+"% - 52px)";
+    });
+  }
+  var mR=document.getElementById("mt-roas"),mS=document.getElementById("mt-spend"),mC=document.getElementById("mt-comp"),mN=document.getElementById("mtNote");
+  function setMetric(mode){
+    mR.setAttribute("aria-pressed",mode==="roas");
+    mS.setAttribute("aria-pressed",mode==="spend");
+    mC.setAttribute("aria-pressed",mode==="comp");
+    mN.textContent=MET[mode].note; renderMetric(mode);
+  }
+  mR.addEventListener("click",function(){setMetric("roas");});
+  mS.addEventListener("click",function(){setMetric("spend");});
+  mC.addEventListener("click",function(){setMetric("comp");});
+
   /* ---------- brain detail ---------- */
   var SYS={
     valuation:{no:1,sign:"pos",name:"Valuation",sub:"orbitofrontal & subgenual mPFC",
@@ -486,6 +549,7 @@
     animate(document);
   }
   setGen("pool");
+  setMetric("roas");
   showSys("memory");
   requestAnimationFrame(function(){renderGen("pool");});
 })();
