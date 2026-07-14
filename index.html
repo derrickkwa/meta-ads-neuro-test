@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>What the brain reveals about a good ad — TRIBE Creative Backtest</title>
+<style>
+  *{margin:0} html{-webkit-text-size-adjust:100%}
+  img,svg,video{max-width:100%;height:auto}
+</style>
+</head>
+<body>
+<style>
+  :root{
+    --ground:#E8EBED; --surface:#FBFCFC; --surface-2:#EFF2F3; --raise:#FFFFFF;
+    --ink:#161C22; --ink-soft:#46515B; --ink-faint:#79848E;
+    --line:#D3DADF; --line-soft:#E2E7EA;
+    --pos:#B8481F; --pos-soft:#D67A50; --pos-wash:#F6E7DE;
+    --neg:#25717F; --neg-soft:#5FA0AC; --neg-wash:#DFECEE;
+    --muted:#8A9299; --muted-soft:#AEB6BC;
+    --accent:var(--pos);
+    --shadow:0 1px 2px rgba(20,30,40,.05), 0 10px 30px rgba(20,30,40,.07);
+    --shadow-sm:0 1px 2px rgba(20,30,40,.06);
+    --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#0E1218; --surface:#161B22; --surface-2:#1B212B; --raise:#1E2530;
+      --ink:#E7ECF1; --ink-soft:#A3AEBA; --ink-faint:#69737F;
+      --line:#252D38; --line-soft:#1F2530;
+      --pos:#F0805C; --pos-soft:#C9633F; --pos-wash:#2A1C15;
+      --neg:#5EB2C6; --neg-soft:#3E8496; --neg-wash:#14232A;
+      --muted:#7C858D; --muted-soft:#59626A;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px rgba(0,0,0,.4);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1218; --surface:#161B22; --surface-2:#1B212B; --raise:#1E2530;
+    --ink:#E7ECF1; --ink-soft:#A3AEBA; --ink-faint:#69737F;
+    --line:#252D38; --line-soft:#1F2530;
+    --pos:#F0805C; --pos-soft:#C9633F; --pos-wash:#2A1C15;
+    --neg:#5EB2C6; --neg-soft:#3E8496; --neg-wash:#14232A;
+    --muted:#7C858D; --muted-soft:#59626A;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px rgba(0,0,0,.4);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  }
+  :root[data-theme="light"]{
+    --ground:#E8EBED; --surface:#FBFCFC; --surface-2:#EFF2F3; --raise:#FFFFFF;
+    --ink:#161C22; --ink-soft:#46515B; --ink-faint:#79848E;
+    --line:#D3DADF; --line-soft:#E2E7EA;
+    --pos:#B8481F; --pos-soft:#D67A50; --pos-wash:#F6E7DE;
+    --neg:#25717F; --neg-soft:#5FA0AC; --neg-wash:#DFECEE;
+    --muted:#8A9299; --muted-soft:#AEB6BC;
+    --shadow:0 1px 2px rgba(20,30,40,.05), 0 10px 30px rgba(20,30,40,.07);
+    --shadow-sm:0 1px 2px rgba(20,30,40,.06);
+  }
+
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);font-family:var(--serif);
+    line-height:1.62;-webkit-font-smoothing:antialiased;margin:0;font-size:17px;letter-spacing:.005em}
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px}
+  section{padding:56px 0;border-top:1px solid var(--line-soft)}
+  section:first-of-type{border-top:none}
+
+  h1,h2,h3,.eyebrow,.label,.stat-n,.chip,.seg,.btn{font-family:var(--sans)}
+  h1{font-size:clamp(30px,5.2vw,52px);line-height:1.06;font-weight:760;letter-spacing:-.021em;text-wrap:balance;margin:.1em 0 .35em}
+  h2{font-size:clamp(23px,3.4vw,32px);line-height:1.12;font-weight:720;letter-spacing:-.017em;text-wrap:balance;margin:0 0 .5em}
+  h3{font-size:18px;font-weight:680;letter-spacing:-.006em;margin:0 0 .35em;font-family:var(--sans)}
+  p{margin:0 0 1em;max-width:68ch}
+  .lede{font-size:clamp(18px,2.3vw,21px);line-height:1.5;color:var(--ink-soft);max-width:64ch}
+  a{color:var(--accent)}
+  strong{font-weight:640;color:var(--ink)} em{font-style:italic}
+
+  .eyebrow{font-size:12.5px;font-weight:640;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:26px;height:2px;background:var(--accent);display:inline-block}
+  .label{font-size:11.5px;font-weight:640;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint)}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600}
+
+  .hero{padding-top:76px;padding-bottom:20px}
+  .thesis{border-left:3px solid var(--accent);padding:4px 0 4px 20px;margin:28px 0 4px;font-size:clamp(18px,2.4vw,22px);line-height:1.48;color:var(--ink);max-width:62ch;font-style:italic}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:34px;box-shadow:var(--shadow-sm)}
+  .stat{background:var(--surface);padding:20px 20px 18px}
+  .stat-n{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+  .stat-l{font-size:13px;color:var(--ink-faint);margin-top:4px;line-height:1.3}
+  @media(max-width:620px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 28px;box-shadow:var(--shadow-sm)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+
+  .chart{margin-top:10px}
+  .row{display:grid;grid-template-columns:180px 1fr;align-items:center;gap:16px;padding:6px 0}
+  .row .rlabel{font-size:13.5px;color:var(--ink-soft);font-family:var(--sans);line-height:1.25;text-align:right}
+  .row .rlabel small{display:block;color:var(--ink-faint);font-size:11.5px;margin-top:1px}
+  .track{position:relative;height:30px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+  .chanceband{position:absolute;top:0;bottom:0;left:0;background:var(--muted);opacity:.15;border-right:1.5px dashed var(--muted-soft);transition:width .7s cubic-bezier(.22,1,.36,1)}
+  .bar{position:absolute;top:5px;height:20px;border-radius:4px;transition:width .7s cubic-bezier(.22,1,.36,1),left .7s cubic-bezier(.22,1,.36,1)}
+  .bar.pos{background:linear-gradient(90deg,var(--pos-soft),var(--pos))}
+  .bar.neg{background:linear-gradient(90deg,var(--neg),var(--neg-soft))}
+  .bar.mut{background:linear-gradient(90deg,var(--muted-soft),var(--muted))}
+  .bval{position:absolute;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--ink);padding:0 7px;white-space:nowrap;z-index:2}
+  .bval .p{color:var(--ink-faint);font-weight:500}
+  .zline{position:absolute;top:-3px;bottom:-3px;width:1px;background:var(--ink-faint);opacity:.5}
+  .chanceband2{position:absolute;top:0;bottom:0;background:var(--muted);opacity:.14;border-left:1.5px dashed var(--muted-soft);border-right:1.5px dashed var(--muted-soft)}
+  .chancekey{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;color:var(--ink-faint)}
+  .chancekey .sw{width:16px;height:11px;background:var(--muted);opacity:.2;border-right:1.5px dashed var(--muted-soft)}
+  .chancekey .sw2{width:22px;height:12px;background:var(--muted);opacity:.22;border-left:1.5px dashed var(--muted-soft);border-right:1.5px dashed var(--muted-soft)}
+  @media(max-width:620px){.row{grid-template-columns:112px 1fr;gap:10px}.row .rlabel{font-size:12px}}
+
+  .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:4px;gap:4px;margin-bottom:6px}
+  .seg button{font-family:var(--sans);font-size:13px;font-weight:600;border:none;cursor:pointer;padding:8px 16px;border-radius:7px;background:transparent;color:var(--ink-soft);transition:.18s;letter-spacing:.005em}
+  .seg button[aria-pressed="true"]{background:var(--raise);color:var(--ink);box-shadow:var(--shadow-sm)}
+  .seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .seg-note{font-size:14.5px;color:var(--ink-soft);margin:14px 0 20px;min-height:2.8em;max-width:62ch;font-style:italic}
+
+  .brainwrap{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:start}
+  @media(max-width:820px){.brainwrap{grid-template-columns:1fr}}
+  .brainstage{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow-sm)}
+  svg.brain{width:100%;height:auto;display:block}
+  .cortex{fill:var(--surface-2);stroke:var(--line);stroke-width:2}
+  .sulcus{fill:none;stroke:var(--line);stroke-width:1.5;opacity:.7}
+  .pin{cursor:pointer}
+  .pin circle.dot{stroke:var(--surface);stroke-width:2.5;transition:.2s}
+  .pin.pos circle.dot{fill:var(--pos)} .pin.neg circle.dot{fill:var(--neg)}
+  .pin.deep circle.dot{stroke-dasharray:3 2;stroke:var(--pos)}
+  .pin text{font-family:var(--mono);font-size:12px;font-weight:700;fill:var(--surface);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+  .pin .halo{fill:none;stroke-width:2;opacity:0;transition:.2s}
+  .pin.pos .halo{stroke:var(--pos)} .pin.neg .halo{stroke:var(--neg)}
+  .pin.active .halo{opacity:.9;r:20} .pin:hover .halo{opacity:.5}
+  .pin:focus-visible{outline:none} .pin:focus-visible .halo{opacity:.9}
+  .legend{list-style:none;padding:0;margin:12px 4px 0;display:flex;flex-wrap:wrap;gap:8px 18px}
+  .legend li{display:flex;align-items:center;gap:7px;font-family:var(--sans);font-size:12px;color:var(--ink-soft)}
+  .legend .sw{width:11px;height:11px;border-radius:50%}
+  .legend .sw.pos{background:var(--pos)} .legend .sw.neg{background:var(--neg)}
+
+  .detail h3{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .detail .sysno{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--surface);background:var(--pos);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;flex:none}
+  .detail.neg .sysno{background:var(--neg)}
+  .detail .sub{font-family:var(--sans);font-size:13px;color:var(--ink-faint);font-weight:500}
+  .detail .plain{font-size:15.5px;color:var(--ink);margin:6px 0 2px}
+  .detail .why{font-size:14.5px;color:var(--ink-soft)}
+  .regchips{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 4px}
+  .chip{font-family:var(--mono);font-size:12px;font-weight:600;padding:4px 9px;border-radius:20px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-soft);white-space:nowrap}
+  .chip b{color:var(--pos);font-weight:700} .detail.neg .chip b{color:var(--neg)}
+  .twin{display:flex;gap:22px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft)}
+  .twin div{flex:1}
+  .twin .k{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);font-family:var(--sans);font-weight:600}
+  .twin .v{font-family:var(--mono);font-size:22px;font-weight:600;margin-top:3px;color:var(--ink)}
+  .twin .v.dim{color:var(--ink-faint)}
+
+  .verdict{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:24px 28px;box-shadow:var(--shadow)}
+  .verdict .oneline{font-size:19px;line-height:1.5;color:var(--ink);font-style:italic;margin:0}
+
+  .insights{counter-reset:iq;list-style:none;padding:0;margin:8px 0 0;display:grid;gap:16px}
+  .insights li{position:relative;padding-left:46px}
+  .insights li::before{counter-increment:iq;content:counter(iq);position:absolute;left:0;top:-2px;font-family:var(--mono);font-size:14px;font-weight:700;color:var(--accent);width:30px;height:30px;border:1.5px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface)}
+  .insights h3{font-size:16.5px;margin-bottom:.2em}
+  .insights p{margin:0;font-size:14.5px;color:var(--ink-soft)}
+
+  .method{columns:2;column-gap:34px;font-size:14.5px;color:var(--ink-soft)}
+  .method p{margin:0 0 .8em;break-inside:avoid;max-width:none}
+  @media(max-width:620px){.method{columns:1}}
+  .note{font-size:13.5px;color:var(--ink-faint);font-style:italic}
+  .caveats{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:10px}
+  .caveats li{padding-left:20px;position:relative;font-size:14.5px;color:var(--ink-soft)}
+  .caveats li::before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--muted)}
+  footer{padding:40px 0 64px;color:var(--ink-faint);font-size:13px;font-family:var(--sans)}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.bar,.chanceband{transition:none}}
+</style>
+
+<div class="wrap hero">
+  <div class="eyebrow reveal">TRIBE × Meta Ad Performance · Internal Research · Jul 2026</div>
+  <h1 class="reveal">What the brain reveals about a good Meta ad</h1>
+  <p class="lede reveal">We ran Meta's TRIBE model — which predicts the brain's response to video — across 205 real Meta ecommerce ads, then asked which brain regions, lit up in the opening seconds, predict whether an ad outperforms its brand's others on Meta. The signal is real, it beats chance, and it points somewhere useful.</p>
+  <p class="thesis reveal">In a Meta ad's first few seconds, one brain signal predicts performance more reliably than any other, brand to brand: how strongly the ad is being encoded into memory. It's real — about twice what chance produces — and it points somewhere useful for the next ad.</p>
+  <div class="stats reveal">
+    <div class="stat"><div class="stat-n">205</div><div class="stat-l">video ads analyzed</div></div>
+    <div class="stat"><div class="stat-n">13</div><div class="stat-l">ecommerce accounts</div></div>
+    <div class="stat"><div class="stat-n">2×</div><div class="stat-l">stronger than chance, out of sample</div></div>
+    <div class="stat"><div class="stat-n">~4s</div><div class="stat-l">the window where the signal lives</div></div>
+  </div>
+</div>
+
+<!-- ============ FINDINGS ============ -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">The headline</div>
+    <h2>Memory is the signal that generalizes</h2>
+    <p>The clearest result: of everything the brain does in a Meta ad's opening, activity in the <strong>memory regions</strong> most reliably predicts performance from one brand to the next. It isn't the single largest correlation when you pool every ad together — valuation and meaning edge it there — but it's the one that barely fades when tested brand by brand. Switch the view to see why that gap is the whole point.</p>
+    <div class="card" style="margin-top:22px">
+      <div class="seg" role="group" aria-label="Which measurement to show">
+        <button id="seg-pool" aria-pressed="true">Across all ads</button>
+        <button id="seg-brand" aria-pressed="false">On a typical brand</button>
+      </div>
+      <p class="seg-note" id="segNote"></p>
+      <div class="chart" id="genChart"></div>
+    </div>
+    <p style="margin-top:22px"><strong>Valuation and meaning lean on scale; memory doesn't.</strong> Their aggregate strength comes largely from the few big-data brands — averaged brand by brand, they roughly halve. Memory barely moves. It works about equally well on every brand, large or small, which is exactly what makes it the signal you'd trust on the next brand you'd never seen.</p>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Is it real?</div>
+    <h2>Stronger than randomness — in both directions</h2>
+    <p>Is any of this more than luck? We shuffled each brand's ad performance at random hundreds of times and re-measured — which tells us exactly what correlation <em>chance</em> produces on this data: about <span class="num">±0.14</span>. Every system clears it (p ≤ .003) — the three that mark <em>better</em> ads, and the two that mark <em>worse</em> ones.</p>
+    <div class="card" style="margin-top:22px">
+      <div class="chart" id="permChart"></div>
+      <div style="margin-top:16px;display:flex;gap:20px;flex-wrap:wrap;align-items:center">
+        <span class="chancekey"><span class="sw2"></span> what chance explains — the noise zone</span>
+        <span class="note">Correlation between a system's early activation and within-brand Meta ad rank. Bars past the grey zone, either side, beat chance.</span>
+      </div>
+    </div>
+    <p style="margin-top:22px">The two <em>negative</em> signals are as sensible as the positives: openings that flood the viewer with <strong>auditory load</strong>, or demand <strong>mental effort</strong> to parse, track worse. And the whole signal lives in the <strong>first four seconds</strong> — average it over the full clip and it washes out entirely.</p>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Where in the brain</div>
+    <h2>The regions — and why they make sense</h2>
+    <p>The signal isn't a scatter of random parcels. It clusters inside known functional systems, and the direction matches what a neuromarketing account would predict. Select a system to see its regions and how it held up.</p>
+    <div class="brainwrap" style="margin-top:24px">
+      <div>
+        <div class="brainstage">
+          <svg class="brain" viewBox="0 0 440 330" role="img" aria-label="Schematic lateral view of the cortex with five region systems marked">
+            <path class="cortex" d="M150 54 C210 26 322 30 368 88 C404 122 400 170 360 198 C349 207 333 208 321 208 C300 244 250 266 174 260 C118 256 74 233 64 196 C54 161 57 118 84 90 C104 66 122 60 150 54 Z"/>
+            <path class="sulcus" d="M96 200 C150 214 214 210 292 190"/>
+            <path class="sulcus" d="M150 96 C176 120 205 128 236 126"/>
+            <g class="pin pos" data-sys="valuation" tabindex="0" role="button" aria-label="Valuation system">
+              <circle class="halo" cx="106" cy="196" r="14"/><circle class="dot" cx="106" cy="196" r="14"/><text x="106" y="196">1</text></g>
+            <g class="pin pos" data-sys="meaning" tabindex="0" role="button" aria-label="Meaning system">
+              <circle class="halo" cx="196" cy="222" r="14"/><circle class="dot" cx="196" cy="222" r="14"/><text x="196" y="222">2</text></g>
+            <g class="pin pos deep" data-sys="memory" tabindex="0" role="button" aria-label="Memory system, deep">
+              <circle class="halo" cx="158" cy="206" r="14"/><circle class="dot" cx="158" cy="206" r="14"/><text x="158" y="206" style="fill:var(--pos)">3</text></g>
+            <g class="pin neg" data-sys="auditory" tabindex="0" role="button" aria-label="Auditory system">
+              <circle class="halo" cx="256" cy="190" r="14"/><circle class="dot" cx="256" cy="190" r="14"/><text x="256" y="190">4</text></g>
+            <g class="pin neg" data-sys="control" tabindex="0" role="button" aria-label="Cognitive control system">
+              <circle class="halo" cx="150" cy="112" r="14"/><circle class="dot" cx="150" cy="112" r="14"/><text x="150" y="112">5</text></g>
+            <text x="70" y="300" style="font-family:var(--mono);font-size:11px;fill:var(--ink-faint)">◀ front (frontal)</text>
+            <text x="300" y="300" style="font-family:var(--mono);font-size:11px;fill:var(--ink-faint)">back (occipital) ▶</text>
+          </svg>
+        </div>
+        <ul class="legend">
+          <li><span class="sw pos"></span> tracks <strong>better</strong>-performing ads</li>
+          <li><span class="sw neg"></span> tracks <strong>worse</strong>-performing ads</li>
+          <li style="color:var(--ink-faint)">Pin 3 (memory) sits deep / medial — placed on the surface for reference</li>
+        </ul>
+        <p class="note" style="margin-top:12px">Schematic lateral cortex, not a rendered scan. Positions are indicative.</p>
+      </div>
+      <div class="card detail" id="detail"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW WE RAN IT ============ -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">How we ran it</div>
+    <h2>The method, briefly</h2>
+    <p>TRIBE takes an ad's video, audio, and transcript and predicts the fMRI response an average brain would produce watching it — region by region, moment by moment. We turned that into features and tested whether early-window activation tracks performance.</p>
+    <div class="method" style="margin-top:22px">
+      <p><strong>Performance, fairly.</strong> Each Meta ad's ROAS, converted to a <em>percentile within its own brand</em> — every account's ads span 0 to 1, so we only ever ask "better than this brand's other ads," never brand vs brand.</p>
+      <p><strong>The features.</strong> Average predicted activation per region, within-brand centered, measured over the early window — roughly the first four seconds, where the signal turned out to live.</p>
+      <p><strong>The honest test.</strong> Leave-one-account-out: train on 12 brands, predict the 13th, unseen. A pattern only counts if it survives on a brand held out of training.</p>
+      <p><strong>The baseline — what chance explains.</strong> Instead of an arbitrary cutoff, we shuffled each brand's ad performance at random hundreds of times and re-measured. That reveals exactly what correlation randomness produces on this data — about ±0.14. A real signal has to beat that noise floor. We use the strict "two-sided" test (a fluke in <em>either</em> direction counts against us), and every system still clears it at p ≤ .003.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT IT MEANS ============ -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">What it suggests for creative</div>
+    <h2>Insights for the next ad</h2>
+    <p>This isn't a score to gate creative on — the effect is real but modest, and built on 13 brands. Treat it as a set of testable hypotheses about what the opening seconds should do, each one grounded in where the brain signal actually pointed.</p>
+    <ol class="insights">
+      <li><h3>Win the first four seconds — that's where it's decided</h3><p>The signal exists early and vanishes when averaged over the whole clip. Whatever the opening does — land a meaning, spark a want, lodge a memory — is what tracked performance. The back half of the ad barely registered.</p></li>
+      <li><h3>Make it memorable before you make it pretty</h3><p>Memory encoding was the most reliable signal of all, brand to brand. The question worth asking of an opening isn't only "is this appealing?" but "will they still have this in mind three seconds from now?" A distinct, sticky idea up front beats a polished but forgettable one.</p></li>
+      <li><h3>Let the meaning land fast</h3><p>Semantic regions — the brain grasping <em>what this is about</em> — carried real signal. An opening whose point registers immediately outperforms one the viewer has to decode. Clarity of idea in second one, not a slow build.</p></li>
+      <li><h3>Keep the opening easy — don't make them work</h3><p>The regions that tracked <em>worse</em> ads were early auditory load and effortful cognitive control. Openings that are sonically busy or demand mental effort to parse read as friction. The best openings feel effortless, not loud.</p></li>
+      <li><h3>Use it as a lens, not a verdict</h3><p>These are directional priors for critiquing an opening or shaping a test — "does this land a memorable meaning in the first beats?" — not a number that greenlights or kills an ad. The value is in the questions it sharpens.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
+    <div class="eyebrow">Standing back</div>
+    <h2>Where this lands</h2>
+    <div class="verdict">
+      <p class="oneline">Early-window activation in the brain's meaning, valuation, and memory regions predicts within-brand Meta ad performance about twice as strongly as chance allows — a real, statistically robust signal of modest size, and most consistent, brand to brand, in the memory regions. The open questions now are magnitude and scale, not whether it exists.</p>
+    </div>
+    <div class="grid2" style="margin-top:24px">
+      <div>
+        <div class="label">Limits to hold in mind</div>
+        <ul class="caveats" style="margin-top:14px">
+          <li>13 accounts is the binding ceiling; per-brand estimates rest on 7–22 ads and carry wide margins.</li>
+          <li>The effect is real but modest — it explains a meaningful slice of within-brand variance, not most of it.</li>
+          <li>TRIBE gives <em>predicted</em>, not measured, brain response — and cortical only. Subcortical reward (the "buy button") wasn't tested.</li>
+          <li>Everything here is correlational, and time windows are approximate.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">What would sharpen it</div>
+        <ul class="caveats" style="margin-top:14px">
+          <li>More brands — the one move that changes the answer — then re-run the held-out test.</li>
+          <li>Isolate the memory signal further, since it's the one that travels between brands.</li>
+          <li>Test the creative hypotheses above directly, in live A/B splits.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>TRIBE Creative Backtest · 205 ads · 13 accounts · TRIBE v2 on Modal</span>
+    <span>Internal research — correlational, hypothesis-generating</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var fmt=function(v){return (v>=0?"+":"−")+Math.abs(v).toFixed(2);};
+
+  /* ---------- shared geometry (diverging, centered on 0) ---------- */
+  var AX_MIN=-0.35, AX_MAX=0.35, CH=0.14;
+  function pos(x){return (x-AX_MIN)/(AX_MAX-AX_MIN)*100;}
+  function geo(v){var z=pos(0); if(v>=0)return{left:z,width:pos(v)-z}; return{left:pos(v),width:z-pos(v)};}
+  var SYSD=[
+    {name:"Valuation",sub:"orbitofrontal",pooled:0.301,brand:0.166,p:"p < .001",sign:"pos"},
+    {name:"Meaning",sub:"lateral temporal",pooled:0.270,brand:0.183,p:"p < .001",sign:"pos"},
+    {name:"Memory",sub:"hippocampus · entorhinal",pooled:0.246,brand:0.223,p:"p < .001",sign:"pos"},
+    {name:"Auditory load",sub:"auditory cortex — worse",pooled:-0.206,brand:-0.138,p:"p = .003",sign:"neg"},
+    {name:"Mental effort",sub:"inferior-frontal · DLPFC — worse",pooled:-0.221,brand:-0.171,p:"p < .001",sign:"neg"}
+  ];
+
+  /* ---------- is-it-real: diverging bars vs chance band ---------- */
+  (function(){
+    var c=document.getElementById("permChart");
+    SYSD.forEach(function(r){
+      var g=geo(r.pooled);
+      var row=document.createElement("div");row.className="row";
+      row.innerHTML='<div class="rlabel">'+r.name+'<small>'+r.sub+'</small></div>'+
+        '<div class="track">'+
+        '<div class="chanceband2" style="left:'+pos(-CH)+'%;width:'+(pos(CH)-pos(-CH))+'%"></div>'+
+        '<div class="zline" style="left:'+pos(0)+'%"></div>'+
+        '<div class="bar '+r.sign+'" data-w="'+g.width+'" data-l="'+g.left+'" style="left:'+pos(0)+'%;width:0%"></div>'+
+        '<div class="bval">'+fmt(r.pooled)+' <span class="p">'+r.p+'</span></div></div>';
+      c.appendChild(row);
+      var bv=row.querySelector(".bval");
+      bv.style.left = r.pooled>=0 ? "calc("+(g.left+g.width)+"% + 8px)" : "calc("+g.left+"% - 96px)";
+    });
+  })();
+
+  /* ---------- generalization toggle: pooled vs per-brand ---------- */
+  (function(){
+    var g=document.getElementById("genChart");
+    SYSD.forEach(function(r){
+      var row=document.createElement("div");row.className="row";
+      row.innerHTML='<div class="rlabel">'+r.name+'<small>'+r.sub+'</small></div>'+
+        '<div class="track"><div class="zline" style="left:'+pos(0)+'%"></div>'+
+        '<div class="bar '+r.sign+'" data-name="'+r.name+'" style="left:'+pos(0)+'%;width:0%"></div>'+
+        '<div class="bval" data-name="'+r.name+'"></div></div>';
+      g.appendChild(row);
+    });
+  })();
+  function renderGen(mode){
+    SYSD.forEach(function(r){
+      var v=(mode==="pool")?r.pooled:r.brand, g=geo(v);
+      var bar=document.querySelector('#genChart .bar[data-name="'+r.name+'"]');
+      var lab=document.querySelector('#genChart .bval[data-name="'+r.name+'"]');
+      bar.style.left=g.left+"%"; bar.style.width=g.width+"%";
+      lab.textContent=fmt(v);
+      lab.style.left = v>=0 ? "calc("+(g.left+g.width)+"% + 8px)" : "calc("+g.left+"% - 52px)";
+      bar.style.opacity=(mode==="brand" && r.name!=="Memory")?.4:1;
+    });
+  }
+  var NOTES={
+    pool:"Across all 205 ads, valuation and meaning show the largest correlations — they rank ads best in aggregate.",
+    brand:"Averaged over each brand on its own, memory pulls ahead: it barely fades (+0.25 → +0.22) while valuation and meaning roughly halve. Memory is the signal that holds on a brand you've never seen."
+  };
+  var bP=document.getElementById("seg-pool"),bB=document.getElementById("seg-brand"),note=document.getElementById("segNote");
+  function setGen(mode){
+    var pool=mode==="pool";
+    bP.setAttribute("aria-pressed",pool);bB.setAttribute("aria-pressed",!pool);
+    note.textContent=NOTES[mode];renderGen(mode);
+  }
+  bP.addEventListener("click",function(){setGen("pool");});
+  bB.addEventListener("click",function(){setGen("brand");});
+
+  /* ---------- brain detail ---------- */
+  var SYS={
+    valuation:{no:1,sign:"pos",name:"Valuation",sub:"orbitofrontal & subgenual mPFC",
+      regions:[["OFC",0.262],["a47r",0.264],["13l",0.223],["s32",0.233]],pooled:0.301,brand:0.166,
+      plain:"How rewarding or desirable the brain finds the ad in its first seconds.",
+      why:"An ad the brain values early is one worth approaching — the reward computation, not just whether the eye was caught. Strongest in aggregate, though it leans on the larger brands."},
+    meaning:{no:2,sign:"pos",name:"Meaning",sub:"anterior & lateral temporal cortex",
+      regions:[["TE2a",0.261],["TE1p",0.252],["TE1m",0.249]],pooled:0.270,brand:0.183,
+      plain:"Whether the message lands — the brain extracting conceptual gist, not just pixels.",
+      why:"An ad understood early tracks better than one merely seen. Meaning registering fast is the difference between a point made and a point missed."},
+    memory:{no:3,sign:"pos",name:"Memory",sub:"entorhinal cortex & hippocampus (deep)",
+      regions:[["EC",0.251],["H",0.242]],pooled:0.246,brand:0.223,
+      plain:"Whether the ad is being encoded into memory early on.",
+      why:"Being remembered is the prerequisite for acting later — and this was the signal that held up most consistently across brands, barely fading brand to brand. The one you'd most trust on a brand you'd never seen."},
+    auditory:{no:4,sign:"neg",name:"Auditory load",sub:"primary & belt auditory cortex",
+      regions:[["LBelt",-0.215],["PBelt",-0.211],["A1",-0.209],["MBelt",-0.200],["A4",-0.195]],pooled:-0.206,brand:-0.138,
+      plain:"Early auditory load — openings that read as sonically busy in the first seconds.",
+      why:"Associated with worse within-brand performance: noise up front, not signal. A real effect — it beats chance (p = .003)."},
+    control:{no:5,sign:"neg",name:"Mental effort",sub:"inferior-frontal / DLPFC",
+      regions:[["IFJa",-0.231],["IFSp",-0.213],["IFJp",-0.203],["8C",-0.199]],pooled:-0.221,brand:-0.171,
+      plain:"Effortful cognitive control — the ad demanding work to process early.",
+      why:"Associated with worse performance: an opening that feels taxing rather than effortless. The stronger of the two negative signals."}
+  };
+  var detail=document.getElementById("detail");
+  var pins=Array.prototype.slice.call(document.querySelectorAll(".pin"));
+  function showSys(key){
+    var s=SYS[key];
+    detail.className="card detail"+(s.sign==="neg"?" neg":"");
+    var chips=s.regions.map(function(r){return '<span class="chip">'+r[0]+' <b>'+fmt(r[1])+'</b></span>';}).join("");
+    detail.innerHTML=
+      '<h3><span class="sysno">'+s.no+'</span>'+s.name+' <span class="sub">'+s.sub+'</span></h3>'+
+      '<p class="plain">'+s.plain+'</p><p class="why">'+s.why+'</p>'+
+      '<div class="label" style="margin-top:6px">Regions &amp; in-corpus correlation</div>'+
+      '<div class="regchips">'+chips+'</div>'+
+      '<div class="twin"><div><div class="k">Across all ads</div><div class="v">'+fmt(s.pooled)+'</div></div>'+
+      '<div><div class="k">Per brand (avg)</div><div class="v">'+fmt(s.brand)+'</div></div></div>';
+    pins.forEach(function(p){p.classList.toggle("active",p.getAttribute("data-sys")===key);});
+  }
+  pins.forEach(function(p){
+    var key=p.getAttribute("data-sys");
+    p.addEventListener("click",function(){showSys(key);});
+    p.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();showSys(key);}});
+  });
+
+  /* ---------- reveal + animate ---------- */
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function animate(scope){
+    scope.querySelectorAll('.bar[data-w]').forEach(function(b){
+      b.style.left=b.getAttribute("data-l")+"%";b.style.width=b.getAttribute("data-w")+"%";});
+    scope.querySelectorAll('.chanceband[data-w]').forEach(function(b){b.style.width=b.getAttribute("data-w")+"%";});
+  }
+  if("IntersectionObserver" in window && !reduce){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");animate(e.target);io.unobserve(e.target);}});
+    },{threshold:.12});
+    document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+  }else{
+    document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in");});
+    animate(document);
+  }
+  setGen("pool");
+  showSys("memory");
+  requestAnimationFrame(function(){renderGen("pool");});
+})();
+</script>
+
+</body>
+</html>
