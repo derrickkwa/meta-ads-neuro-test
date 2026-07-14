@@ -218,9 +218,47 @@
 <!-- ============ FINDINGS ============ -->
 <section class="reveal">
   <div class="wrap">
+    <div class="eyebrow">Start here · the five systems</div>
+    <h2>What we measured, and what it means</h2>
+    <p>The study tracks five brain systems, each doing a recognizable job in an ad's first seconds. Three tend to engage for <em>better</em>-performing ads, two for <em>worse</em> ones — and, reassuringly, the directions match what a neuromarketing account would predict. Select a system to see what it does and the regions behind it. The rest of the report is about which of these actually holds up.</p>
+    <div class="brainwrap" style="margin-top:24px">
+      <div>
+        <div class="brainstage">
+          <svg class="brain" viewBox="0 0 440 330" role="img" aria-label="Schematic lateral view of the cortex with five region systems marked">
+            <path class="cortex" d="M150 54 C210 26 322 30 368 88 C404 122 400 170 360 198 C349 207 333 208 321 208 C300 244 250 266 174 260 C118 256 74 233 64 196 C54 161 57 118 84 90 C104 66 122 60 150 54 Z"/>
+            <path class="sulcus" d="M96 200 C150 214 214 210 292 190"/>
+            <path class="sulcus" d="M150 96 C176 120 205 128 236 126"/>
+            <g class="pin pos" data-sys="valuation" tabindex="0" role="button" aria-label="Valuation system">
+              <circle class="halo" cx="106" cy="196" r="14"/><circle class="dot" cx="106" cy="196" r="14"/><text x="106" y="196">1</text></g>
+            <g class="pin pos" data-sys="meaning" tabindex="0" role="button" aria-label="Meaning system">
+              <circle class="halo" cx="196" cy="222" r="14"/><circle class="dot" cx="196" cy="222" r="14"/><text x="196" y="222">2</text></g>
+            <g class="pin pos deep" data-sys="memory" tabindex="0" role="button" aria-label="Memory system, deep">
+              <circle class="halo" cx="158" cy="206" r="14"/><circle class="dot" cx="158" cy="206" r="14"/><text x="158" y="206" style="fill:var(--pos)">3</text></g>
+            <g class="pin neg" data-sys="auditory" tabindex="0" role="button" aria-label="Auditory system">
+              <circle class="halo" cx="256" cy="190" r="14"/><circle class="dot" cx="256" cy="190" r="14"/><text x="256" y="190">4</text></g>
+            <g class="pin neg" data-sys="control" tabindex="0" role="button" aria-label="Cognitive control system">
+              <circle class="halo" cx="150" cy="112" r="14"/><circle class="dot" cx="150" cy="112" r="14"/><text x="150" y="112">5</text></g>
+            <text x="70" y="300" style="font-family:var(--mono);font-size:11px;fill:var(--ink-faint)">◀ front (frontal)</text>
+            <text x="300" y="300" style="font-family:var(--mono);font-size:11px;fill:var(--ink-faint)">back (occipital) ▶</text>
+          </svg>
+        </div>
+        <ul class="legend">
+          <li><span class="sw pos"></span> tracks <strong>better</strong>-performing ads</li>
+          <li><span class="sw neg"></span> tracks <strong>worse</strong>-performing ads</li>
+          <li style="color:var(--ink-faint)">Pin 3 (memory) sits deep / medial — placed on the surface for reference</li>
+        </ul>
+        <p class="note" style="margin-top:12px">Schematic lateral cortex, not a rendered scan. Positions are indicative.</p>
+      </div>
+      <div class="card detail" id="detail"></div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="wrap">
     <div class="eyebrow">The headline</div>
     <h2>Memory is the signal that generalizes</h2>
-    <p>The clearest result: of everything the brain does in a Meta ad's opening, activity in the <strong>memory regions</strong> most reliably predicts performance from one brand to the next. It isn't the single largest correlation when you pool every ad together — valuation and meaning edge it there — but it's the one that barely fades when tested brand by brand. Switch the view to see why that gap is the whole point.</p>
+    <p>The clearest result: of those five systems, it's the <strong>memory regions</strong> whose early activity most reliably predicts performance from one brand to the next. Memory isn't the single largest correlation when you pool every ad together — valuation and meaning edge it there — but it's the one that barely fades when tested brand by brand. Switch the view to see why that gap is the whole point.</p>
     <div class="card" style="margin-top:22px">
       <div class="seg" role="group" aria-label="Which measurement to show">
         <button id="seg-pool" aria-pressed="true">Across all ads</button>
@@ -265,44 +303,6 @@
       <div style="margin-top:16px"><span class="chancekey"><span class="sw2"></span> what chance explains — the noise zone</span></div>
     </div>
     <p style="margin-top:22px">Two things hold. The regions and their directions don't move with the metric — the signal is real however you define success. And <strong>memory leads under the compound</strong>: it's the one system carrying even a trace of the spend (scale) signal, so it survives the switch best — the same verdict the brand-by-brand test reached.</p>
-  </div>
-</section>
-
-<section class="reveal">
-  <div class="wrap">
-    <div class="eyebrow">Where in the brain</div>
-    <h2>The regions — and why they make sense</h2>
-    <p>The signal isn't a scatter of random parcels. It clusters inside known functional systems, and the direction matches what a neuromarketing account would predict. Select a system to see its regions and how it held up.</p>
-    <div class="brainwrap" style="margin-top:24px">
-      <div>
-        <div class="brainstage">
-          <svg class="brain" viewBox="0 0 440 330" role="img" aria-label="Schematic lateral view of the cortex with five region systems marked">
-            <path class="cortex" d="M150 54 C210 26 322 30 368 88 C404 122 400 170 360 198 C349 207 333 208 321 208 C300 244 250 266 174 260 C118 256 74 233 64 196 C54 161 57 118 84 90 C104 66 122 60 150 54 Z"/>
-            <path class="sulcus" d="M96 200 C150 214 214 210 292 190"/>
-            <path class="sulcus" d="M150 96 C176 120 205 128 236 126"/>
-            <g class="pin pos" data-sys="valuation" tabindex="0" role="button" aria-label="Valuation system">
-              <circle class="halo" cx="106" cy="196" r="14"/><circle class="dot" cx="106" cy="196" r="14"/><text x="106" y="196">1</text></g>
-            <g class="pin pos" data-sys="meaning" tabindex="0" role="button" aria-label="Meaning system">
-              <circle class="halo" cx="196" cy="222" r="14"/><circle class="dot" cx="196" cy="222" r="14"/><text x="196" y="222">2</text></g>
-            <g class="pin pos deep" data-sys="memory" tabindex="0" role="button" aria-label="Memory system, deep">
-              <circle class="halo" cx="158" cy="206" r="14"/><circle class="dot" cx="158" cy="206" r="14"/><text x="158" y="206" style="fill:var(--pos)">3</text></g>
-            <g class="pin neg" data-sys="auditory" tabindex="0" role="button" aria-label="Auditory system">
-              <circle class="halo" cx="256" cy="190" r="14"/><circle class="dot" cx="256" cy="190" r="14"/><text x="256" y="190">4</text></g>
-            <g class="pin neg" data-sys="control" tabindex="0" role="button" aria-label="Cognitive control system">
-              <circle class="halo" cx="150" cy="112" r="14"/><circle class="dot" cx="150" cy="112" r="14"/><text x="150" y="112">5</text></g>
-            <text x="70" y="300" style="font-family:var(--mono);font-size:11px;fill:var(--ink-faint)">◀ front (frontal)</text>
-            <text x="300" y="300" style="font-family:var(--mono);font-size:11px;fill:var(--ink-faint)">back (occipital) ▶</text>
-          </svg>
-        </div>
-        <ul class="legend">
-          <li><span class="sw pos"></span> tracks <strong>better</strong>-performing ads</li>
-          <li><span class="sw neg"></span> tracks <strong>worse</strong>-performing ads</li>
-          <li style="color:var(--ink-faint)">Pin 3 (memory) sits deep / medial — placed on the surface for reference</li>
-        </ul>
-        <p class="note" style="margin-top:12px">Schematic lateral cortex, not a rendered scan. Positions are indicative.</p>
-      </div>
-      <div class="card detail" id="detail"></div>
-    </div>
   </div>
 </section>
 
